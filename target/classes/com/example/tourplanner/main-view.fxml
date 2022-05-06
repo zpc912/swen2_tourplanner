@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #fff;" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tourplanner.views.MainViewController">
+    <children>
+        <BorderPane layoutX="100.0" layoutY="63.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <MenuBar BorderPane.alignment="CENTER">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="File">
+                            <items>
+                                <!--<MenuItem mnemonicParsing="false" onAction="#importDataAction" text="Import Data" />
+                                <MenuItem mnemonicParsing="false" onAction="#exportDataAction" text="Export Data" />-->
+                                <MenuItem mnemonicParsing="false" text="Import Data" />
+                                <MenuItem mnemonicParsing="false" text="Export Data" />
+                            </items>
+                        </Menu>
+
+                        <Menu mnemonicParsing="false" text="Options">
+                            <items>
+                                <!--<MenuItem mnemonicParsing="false" onAction="#generateSummaryReportAction"
+                                          text="Generate Summary Report"/>
+                                <MenuItem mnemonicParsing="false" onAction="#generateTourReportAction"
+                                          text="Generate Tour Report"/>-->
+                                <MenuItem mnemonicParsing="false"
+                                          text="Generate Summary Report"/>
+                                <MenuItem mnemonicParsing="false"
+                                          text="Generate Tour Report"/>
+                            </items>
+                        </Menu>
+
+                        <Menu mnemonicParsing="false" text="Help">
+                            <items>
+                                <!--<MenuItem mnemonicParsing="false" onAction="#helpAction" text="Help"/>-->
+                                <MenuItem mnemonicParsing="false" onAction="#openHelpWindow" text="Help"/>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </top>
+
+            <left>
+                <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #fff;" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+                    <content>
+                        <VBox style="-fx-background-color: #fff;">
+                            <children>
+                                <HBox alignment="CENTER_RIGHT">
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tours">
+                                            <font>
+                                                <Font name="Tours" size="14.0" />
+                                            </font>
+                                        </Text>
+
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <!--<Button mnemonicParsing="false" onAction="#addTourAction" text="+" />
+                                        <Button mnemonicParsing="false" onAction="#deleteTourAction" text="-">-->
+                                        <Button mnemonicParsing="false" text="+" />
+                                        <Button mnemonicParsing="false" text="-">
+                                            <HBox.margin>
+                                                <Insets left="5.0" />
+                                            </HBox.margin>
+                                        </Button>
+                                        <!--<Button mnemonicParsing="false" onAction="#editTourAction" text="Edit">-->
+                                        <Button mnemonicParsing="false" text="Edit">
+                                            <HBox.margin>
+                                                <Insets left="5.0" />
+                                            </HBox.margin>
+                                        </Button>
+                                    </children>
+
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                </HBox>
+                                <Separator prefWidth="200.0" />
+
+                                <TextField fx:id="searchField" promptText="Search">
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </VBox.margin>
+                                </TextField>
+
+                                <!--<ListView fx:id="toursListView" onMouseClicked="#selectTourAction" style="-fx-border-width: 0; -fx-background-color: transparent;" VBox.vgrow="ALWAYS" />-->
+                                <ListView fx:id="toursListView" style="-fx-border-width: 0; -fx-background-color: transparent;" VBox.vgrow="ALWAYS" />
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </left>
+
+            <center>
+                <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #fff;" vbarPolicy="ALWAYS" BorderPane.alignment="CENTER">
+                    <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: #fff;">
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                            </padding>
+                            <children>
+
+                                <Text fx:id="currentTourName" strokeType="OUTSIDE" strokeWidth="0.0">
+                                    <font>
+                                        <Font name="System Bold" size="16.0" />
+                                    </font>
+                                </Text>
+
+                                <TabPane prefHeight="200.0" tabClosingPolicy="UNAVAILABLE">
+                                    <tabs>
+                                        <Tab closable="false" text="Route">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: #C8C8C8; -fx-background-color: #fff;">
+                                                    <children>
+                                                        <ImageView fx:id="currentTourImage" fitHeight="150.0" fitWidth="200.0" layoutX="-15.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                    </children></AnchorPane>
+                                            </content>
+                                        </Tab>
+
+                                        <Tab closable="false" text="Description">
+                                            <content>
+                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: #C8C8C8; -fx-background-color: #fff;">
+                                                    <children>
+                                                        <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="-48.0" prefWidth="200.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                            <Text fx:id="currentTourDescription" strokeType="OUTSIDE" strokeWidth="0.0">
+                                                                <font>
+                                                                    <Font size="14.0" />
+                                                                </font>
+                                                            </Text>
+                                                            <padding>
+                                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                            </padding>
+                                                        </ScrollPane>
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </Tab>
+                                    </tabs>
+                                </TabPane>
+
+                                <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0">
+                                    <children>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0">
+                                            <font>
+                                                <Font name="System Bold" size="16.0" />
+                                            </font>
+                                        </Text>
+
+                                        <Region HBox.hgrow="ALWAYS" />
+                                        <!--<Button mnemonicParsing="false" onAction="#addTourLogAction" text="+" />
+                                        <Button mnemonicParsing="false" onAction="#deleteTourLogAction" text="-">-->
+                                        <Button mnemonicParsing="false" text="+" />
+                                        <Button mnemonicParsing="false" text="-">
+                                            <HBox.margin>
+                                                <Insets left="5.0" />
+                                            </HBox.margin>
+                                        </Button>
+
+                                        <!--<Button mnemonicParsing="false" onAction="#editTourLogAction" text="Edit">-->
+                                        <Button mnemonicParsing="false" text="Edit">
+                                            <HBox.margin>
+                                                <Insets left="5.0" />
+                                            </HBox.margin>
+                                        </Button>
+                                    </children>
+                                </HBox>
+
+                                <TableView fx:id="currentTourLogsTable" prefHeight="200.0" prefWidth="200.0">
+                                    <columns>
+                                        <TableColumn text="Date">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="dateValue"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+
+                                        <TableColumn text="Duration">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="durationValue"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+
+                                        <TableColumn text="Distance">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="distanceValue"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+
+                                        <TableColumn text="Report">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="reportValue"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+
+                                        <TableColumn text="Average Speed">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="avgSpeedValue"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+
+                                        <TableColumn text="Average Power">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="avgPowerValue"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+
+                                        <TableColumn text="Normalized Power">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="normalizedPowerValue"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+
+                                        <TableColumn text="Average Heart Rate">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="avgHeartRateValue"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+
+                                        <TableColumn text="Average Cadence">
+                                            <cellValueFactory>
+                                                <PropertyValueFactory property="avgCadenceValue"/>
+                                            </cellValueFactory>
+                                        </TableColumn>
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </VBox>
+                    </content>
+                </ScrollPane>
+            </center>
+        </BorderPane>
+    </children>
+</AnchorPane>

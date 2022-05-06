@@ -60,7 +60,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.swen2_tourplanner/com.example.swen2_tourplanner.HelloApplication
+                            <mainClass>com.example.swen2_tourplanner/com.example.tourplanner.Main
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
