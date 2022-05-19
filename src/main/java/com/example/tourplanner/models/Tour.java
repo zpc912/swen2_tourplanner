@@ -2,7 +2,7 @@ package com.example.tourplanner.models;
 
 public class Tour {
 
-    private int tourId;
+    private String tourId;
     private String tourName;
     private String tourDesc;
     private String from;
@@ -13,11 +13,24 @@ public class Tour {
     private String routeInfo;
 
 
-    public int getTourId() {
+    public Tour(String tourId, String tourName, String tourDesc, String from, String to, String transportType, float distance, String estTime, String routeInfo) {
+        this.tourId = tourId;
+        this.tourName = tourName;
+        this.tourDesc = tourDesc;
+        this.from = from;
+        this.to = to;
+        this.transportType = transportType;
+        this.distance = distance;
+        this.estTime = estTime;
+        this.routeInfo = routeInfo;
+    }
+
+
+    public String getTourId() {
         return tourId;
     }
 
-    public void setTourId(int tourId) {
+    public void setTourId(String tourId) {
         this.tourId = tourId;
     }
 

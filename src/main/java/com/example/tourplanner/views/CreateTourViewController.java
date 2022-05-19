@@ -1,7 +1,7 @@
 package com.example.tourplanner.views;
 
 import com.example.tourplanner.Main;
-import com.example.tourplanner.viewmodels.*;
+import com.example.tourplanner.viewmodels.TourViewModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,9 +18,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EditTourViewController implements Initializable {
+public class CreateTourViewController implements Initializable {
 
-    private TourViewModel viewModel;
+    private TourViewModel viewModel = new TourViewModel();
 
     @FXML
     public TextField tourNameField;
@@ -44,34 +44,20 @@ public class EditTourViewController implements Initializable {
     }
 
 
-    // TourViewModel Setter:
-    public void setViewModel(TourViewModel viewModel) {
-        this.viewModel = viewModel;
-    }
-
-
-    // TourViewModel Getter:
-    public TourViewModel getViewModel() {
-        return viewModel;
-    }
-
-
-    public static void editTourWindow(Stage stage, TourViewModel tourViewModel) {
+    public static void newTourWindow(Stage stage) {
         try {
-            EditTourViewController editTourViewController = new EditTourViewController();
-            editTourViewController.setViewModel(tourViewModel);
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("edit-tour-view.fxml"));
-            fxmlLoader.setController(editTourViewController);
+            fxmlLoader.setController(new CreateTourViewController());
             Parent root = fxmlLoader.load();
-            Stage editTourStage = new Stage();
-            editTourStage.setTitle("Edit Tour");
-            Scene editTourScene = new Scene(root, 600, 400);
-            editTourStage.setScene(editTourScene);
-            editTourStage.setMinWidth(600);
-            editTourStage.setMinHeight(400);
-            editTourStage.initOwner(stage);
-            editTourStage.initModality(Modality.APPLICATION_MODAL);
-            editTourStage.showAndWait();
+            Stage newTourStage = new Stage();
+            newTourStage.setTitle("New Tour");
+            Scene newTourScene = new Scene(root, 600, 400);
+            newTourStage.setScene(newTourScene);
+            newTourStage.setMinWidth(600);
+            newTourStage.setMinHeight(400);
+            newTourStage.initOwner(stage);
+            newTourStage.initModality(Modality.APPLICATION_MODAL);
+            newTourStage.showAndWait();
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -84,7 +70,7 @@ public class EditTourViewController implements Initializable {
 
 
     public void tourApplyButton(ActionEvent actionEvent) {
-        if(viewModel.editTour()) {
+        if(viewModel.createNewTour() != null) {
             ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
         }
     }

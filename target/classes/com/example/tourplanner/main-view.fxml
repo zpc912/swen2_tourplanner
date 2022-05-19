@@ -15,21 +15,19 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                                <!--<MenuItem mnemonicParsing="false" onAction="#importDataAction" text="Import Data" />
-                                <MenuItem mnemonicParsing="false" onAction="#exportDataAction" text="Export Data" />-->
+                                <!-- ADD "ON-ACTION" ATTRIBUTE -->
                                 <MenuItem mnemonicParsing="false" text="Import Data" />
+                                <!-- ADD "ON-ACTION" ATTRIBUTE -->
                                 <MenuItem mnemonicParsing="false" text="Export Data" />
                             </items>
                         </Menu>
 
                         <Menu mnemonicParsing="false" text="Options">
                             <items>
-                                <!--<MenuItem mnemonicParsing="false" onAction="#generateSummaryReportAction"
-                                          text="Generate Summary Report"/>
-                                <MenuItem mnemonicParsing="false" onAction="#generateTourReportAction"
-                                          text="Generate Tour Report"/>-->
+                                <!-- ADD "ON-ACTION" ATTRIBUTE -->
                                 <MenuItem mnemonicParsing="false"
                                           text="Generate Summary Report"/>
+                                <!-- ADD "ON-ACTION" ATTRIBUTE -->
                                 <MenuItem mnemonicParsing="false"
                                           text="Generate Tour Report"/>
                             </items>
@@ -37,7 +35,6 @@
 
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
-                                <!--<MenuItem mnemonicParsing="false" onAction="#helpAction" text="Help"/>-->
                                 <MenuItem mnemonicParsing="false" onAction="#openHelpWindow" text="Help"/>
                             </items>
                         </Menu>
@@ -59,16 +56,14 @@
                                         </Text>
 
                                         <Region HBox.hgrow="ALWAYS" />
-                                        <!--<Button mnemonicParsing="false" onAction="#addTourAction" text="+" />
-                                        <Button mnemonicParsing="false" onAction="#deleteTourAction" text="-">-->
-                                        <Button mnemonicParsing="false" text="+" />
-                                        <Button mnemonicParsing="false" text="-">
+                                        <Button mnemonicParsing="false" onAction="#createNewTour" text="+" />
+                                        <Button mnemonicParsing="false" onAction="#deleteSelectedTour" text="-">
                                             <HBox.margin>
                                                 <Insets left="5.0" />
                                             </HBox.margin>
                                         </Button>
-                                        <!--<Button mnemonicParsing="false" onAction="#editTourAction" text="Edit">-->
-                                        <Button mnemonicParsing="false" text="Edit">
+                                        <!-- ADD "ON-ACTION" ATTRIBUTE -->
+                                        <Button mnemonicParsing="false" onAction="#editSelectedTour" text="Edit">
                                             <HBox.margin>
                                                 <Insets left="5.0" />
                                             </HBox.margin>
@@ -87,8 +82,7 @@
                                     </VBox.margin>
                                 </TextField>
 
-                                <!--<ListView fx:id="toursListView" onMouseClicked="#selectTourAction" style="-fx-border-width: 0; -fx-background-color: transparent;" VBox.vgrow="ALWAYS" />-->
-                                <ListView fx:id="toursListView" style="-fx-border-width: 0; -fx-background-color: transparent;" VBox.vgrow="ALWAYS" />
+                                <ListView fx:id="tourListView" onMouseClicked="#fillInSelectedTour" style="-fx-border-width: 0; -fx-background-color: transparent;" VBox.vgrow="ALWAYS" />
                             </children>
                         </VBox>
                     </content>
@@ -104,7 +98,7 @@
                             </padding>
                             <children>
 
-                                <Text fx:id="currentTourName" strokeType="OUTSIDE" strokeWidth="0.0">
+                                <Text fx:id="currTourName" strokeType="OUTSIDE" strokeWidth="0.0">
                                     <font>
                                         <Font name="System Bold" size="16.0" />
                                     </font>
@@ -116,7 +110,7 @@
                                             <content>
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: #C8C8C8; -fx-background-color: #fff;">
                                                     <children>
-                                                        <ImageView fx:id="currentTourImage" fitHeight="150.0" fitWidth="200.0" layoutX="-15.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                        <ImageView fx:id="currTourImage" fitHeight="150.0" fitWidth="200.0" layoutX="-15.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                     </children></AnchorPane>
                                             </content>
                                         </Tab>
@@ -126,7 +120,7 @@
                                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-border-color: #C8C8C8; -fx-background-color: #fff;">
                                                     <children>
                                                         <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="-48.0" prefWidth="200.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                            <Text fx:id="currentTourDescription" strokeType="OUTSIDE" strokeWidth="0.0">
+                                                            <Text fx:id="currTourDescription" strokeType="OUTSIDE" strokeWidth="0.0">
                                                                 <font>
                                                                     <Font size="14.0" />
                                                                 </font>
@@ -151,16 +145,16 @@
                                         </Text>
 
                                         <Region HBox.hgrow="ALWAYS" />
-                                        <!--<Button mnemonicParsing="false" onAction="#addTourLogAction" text="+" />
-                                        <Button mnemonicParsing="false" onAction="#deleteTourLogAction" text="-">-->
+                                        <!-- ADD "ON-ACTION" ATTRIBUTE -->
                                         <Button mnemonicParsing="false" text="+" />
+                                        <!-- ADD "ON-ACTION" ATTRIBUTE -->
                                         <Button mnemonicParsing="false" text="-">
                                             <HBox.margin>
                                                 <Insets left="5.0" />
                                             </HBox.margin>
                                         </Button>
 
-                                        <!--<Button mnemonicParsing="false" onAction="#editTourLogAction" text="Edit">-->
+                                        <!-- ADD "ON-ACTION" ATTRIBUTE -->
                                         <Button mnemonicParsing="false" text="Edit">
                                             <HBox.margin>
                                                 <Insets left="5.0" />
@@ -169,7 +163,7 @@
                                     </children>
                                 </HBox>
 
-                                <TableView fx:id="currentTourLogsTable" prefHeight="200.0" prefWidth="200.0">
+                                <TableView fx:id="currTourLogs" prefHeight="200.0" prefWidth="200.0">
                                     <columns>
                                         <TableColumn text="Date">
                                             <cellValueFactory>
@@ -177,51 +171,27 @@
                                             </cellValueFactory>
                                         </TableColumn>
 
-                                        <TableColumn text="Duration">
+                                        <TableColumn text="Comment">
                                             <cellValueFactory>
-                                                <PropertyValueFactory property="durationValue"/>
+                                                <PropertyValueFactory property="commentValue"/>
                                             </cellValueFactory>
                                         </TableColumn>
 
-                                        <TableColumn text="Distance">
+                                        <TableColumn text="Difficulty">
                                             <cellValueFactory>
-                                                <PropertyValueFactory property="distanceValue"/>
+                                                <PropertyValueFactory property="difficultyValue"/>
                                             </cellValueFactory>
                                         </TableColumn>
 
-                                        <TableColumn text="Report">
+                                        <TableColumn text="Total Time">
                                             <cellValueFactory>
-                                                <PropertyValueFactory property="reportValue"/>
+                                                <PropertyValueFactory property="totalTimeValue"/>
                                             </cellValueFactory>
                                         </TableColumn>
 
-                                        <TableColumn text="Average Speed">
+                                        <TableColumn text="Rating">
                                             <cellValueFactory>
-                                                <PropertyValueFactory property="avgSpeedValue"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-
-                                        <TableColumn text="Average Power">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="avgPowerValue"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-
-                                        <TableColumn text="Normalized Power">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="normalizedPowerValue"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-
-                                        <TableColumn text="Average Heart Rate">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="avgHeartRateValue"/>
-                                            </cellValueFactory>
-                                        </TableColumn>
-
-                                        <TableColumn text="Average Cadence">
-                                            <cellValueFactory>
-                                                <PropertyValueFactory property="avgCadenceValue"/>
+                                                <PropertyValueFactory property="ratingValue"/>
                                             </cellValueFactory>
                                         </TableColumn>
                                     </columns>

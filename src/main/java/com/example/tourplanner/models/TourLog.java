@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class TourLog {
 
-    private int tourLogId;
+    private String tourLogId;
     private Tour tour;
     private LocalDate date;
     private String comment;
@@ -13,11 +13,22 @@ public class TourLog {
     private int rating;
 
 
-    public int getTourLogId() {
+    public TourLog(String tourLogId, Tour tour, LocalDate date, String comment, int difficulty, String totalTime, int rating) {
+        this.tourLogId = tourLogId;
+        this.tour = tour;
+        this.date = date;
+        this.comment = comment;
+        this.difficulty = difficulty;
+        this.totalTime = totalTime;
+        this.rating = rating;
+    }
+
+
+    public String getTourLogId() {
         return tourLogId;
     }
 
-    public void setTourLogId(int tourLogId) {
+    public void setTourLogId(String tourLogId) {
         this.tourLogId = tourLogId;
     }
 
