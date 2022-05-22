@@ -5,11 +5,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.Node;
 import javafx.event.ActionEvent;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -28,6 +30,8 @@ public class MainViewController implements Initializable {
     private ListView<TourViewModel> tourListView;
     @FXML
     private TableView<TourLogViewModel> currTourLogs;
+    @FXML
+    private TableColumn<TourLogViewModel, LocalDate> dateValue;
 
 
     @Override
@@ -81,6 +85,40 @@ public class MainViewController implements Initializable {
             Stage newStage = (Stage) newNode.getScene().getWindow();
 
             EditTourViewController.editTourWindow(newStage, tour);
+        }
+    }
+
+
+    public void createTourLog(ActionEvent actionEvent) {
+        TourViewModel tour = tourListView.getSelectionModel().getSelectedItem();
+
+        if(tour != null) {
+            Node newNode = (Node) actionEvent.getSource();
+            Stage newStage = (Stage) newNode.getScene().getWindow();
+
+            CreateTourLogViewController.newTourLogWindow(newStage, tour);
+        }
+    }
+
+
+    public void deleteSelectedTourLog(ActionEvent actionEvent) {
+        TourLogViewModel tourLog = currTourLogs.getSelectionModel().getSelectedItem();
+
+        if(tourLog != null && tourLog.getTourLogIdValue() != null) {
+            String tourLogId = tourLog.getTourLogIdValue();
+            viewModel.deleteTourLog(tourLogId);
+        }
+    }
+
+
+    public void editSelectedTourLog(ActionEvent actionEvent) {
+        TourLogViewModel tourLog = currTourLogs.getSelectionModel().getSelectedItem();
+
+        if(tourLog != null) {
+            Node newNode = (Node) actionEvent.getSource();
+            Stage newStage = (Stage) newNode.getScene().getWindow();
+
+            EditTourLogViewController.editTourLogWindow(newStage, tourLog);
         }
     }
 }

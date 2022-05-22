@@ -4,6 +4,7 @@ import com.example.tourplanner.dal.common.DALFactory;
 import com.example.tourplanner.dal.common.IDatabase;
 import com.example.tourplanner.dal.dao.ITourDAO;
 import com.example.tourplanner.models.Tour;
+import com.example.tourplanner.models.TourLog;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;

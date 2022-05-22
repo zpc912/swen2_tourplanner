@@ -8,12 +8,12 @@ public class TourLog {
     private Tour tour;
     private LocalDate date;
     private String comment;
-    private int difficulty;
+    private String difficulty;
     private String totalTime;
-    private int rating;
+    private String rating;
 
 
-    public TourLog(String tourLogId, Tour tour, LocalDate date, String comment, int difficulty, String totalTime, int rating) {
+    public TourLog(String tourLogId, Tour tour, LocalDate date, String comment, String difficulty, String totalTime, String rating) {
         this.tourLogId = tourLogId;
         this.tour = tour;
         this.date = date;
@@ -56,11 +56,11 @@ public class TourLog {
         this.comment = comment;
     }
 
-    public int getDifficulty() {
+    public String getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -72,11 +72,11 @@ public class TourLog {
         this.totalTime = totalTime;
     }
 
-    public int getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 }

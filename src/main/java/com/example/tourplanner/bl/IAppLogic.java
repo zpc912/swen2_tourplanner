@@ -16,4 +16,12 @@ public interface IAppLogic {
     boolean updateTour(Tour tour);
 
     boolean deleteTour(String tourId);
+
+    String createTourLog(TourLog tourLog, Tour tour);
+
+    List<TourLog> getLogOfTour(Tour tour);
+
+    boolean deleteTourLog(String tourLogId);
+
+    boolean updateTourLog(TourLog tourLog);
 }

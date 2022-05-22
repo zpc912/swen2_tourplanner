@@ -101,4 +101,10 @@ public class TourViewModel {
 
         return result;
     }
+
+
+    public Tour initializeTour() {
+        Tour tour = new Tour(id.getValue(), name.getValue(), description.getValue(), from.getValue(), to.getValue(), transportType.getValue(), distance.getValue(), estTime.getValue(), routeInfo.getValue());
+        return tour;
+    }
 }

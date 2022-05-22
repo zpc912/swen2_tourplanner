@@ -62,7 +62,7 @@
                                                 <Insets left="5.0" />
                                             </HBox.margin>
                                         </Button>
-                                        <!-- ADD "ON-ACTION" ATTRIBUTE -->
+
                                         <Button mnemonicParsing="false" onAction="#editSelectedTour" text="Edit">
                                             <HBox.margin>
                                                 <Insets left="5.0" />
@@ -145,17 +145,14 @@
                                         </Text>
 
                                         <Region HBox.hgrow="ALWAYS" />
-                                        <!-- ADD "ON-ACTION" ATTRIBUTE -->
-                                        <Button mnemonicParsing="false" text="+" />
-                                        <!-- ADD "ON-ACTION" ATTRIBUTE -->
-                                        <Button mnemonicParsing="false" text="-">
+                                        <Button mnemonicParsing="false" onAction="#createTourLog" text="+" />
+                                        <Button mnemonicParsing="false" onAction="#deleteSelectedTourLog" text="-">
                                             <HBox.margin>
                                                 <Insets left="5.0" />
                                             </HBox.margin>
                                         </Button>
 
-                                        <!-- ADD "ON-ACTION" ATTRIBUTE -->
-                                        <Button mnemonicParsing="false" text="Edit">
+                                        <Button mnemonicParsing="false" onAction="#editSelectedTourLog" text="Edit">
                                             <HBox.margin>
                                                 <Insets left="5.0" />
                                             </HBox.margin>

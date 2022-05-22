@@ -1,6 +1,7 @@
 package com.example.tourplanner.dal.dao;
 
 import com.example.tourplanner.models.Tour;
+import com.example.tourplanner.models.TourLog;
 
 import java.sql.SQLException;
 import java.util.List;

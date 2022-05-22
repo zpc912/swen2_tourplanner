@@ -5,7 +5,9 @@ import com.example.tourplanner.bl.events.IEventListener;
 import com.example.tourplanner.bl.events.IEventManager;
 import com.example.tourplanner.dal.common.DALFactory;
 import com.example.tourplanner.dal.dao.ITourDAO;
+import com.example.tourplanner.dal.dao.ITourLogDAO;
 import com.example.tourplanner.models.Tour;
+import com.example.tourplanner.models.TourLog;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -110,6 +112,74 @@ public class AppLogic implements IAppLogic, IEventListener {
         try {
             if(tourDAO != null) {
                 boolean result = tourDAO.deleteTour(tourId);
+                return result;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    @Override
+    public String createTourLog(TourLog tourLog, Tour tour) {
+        ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
+
+        try {
+            if(tourLogDAO != null) {
+                String result = tourLogDAO.addNewTourLog(tourLog, tour);
+                return result;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    @Override
+    public List<TourLog> getLogOfTour(Tour tour) {
+        ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
+
+        try {
+            if(tourLogDAO != null) {
+                List<TourLog> result = tourLogDAO.getLogOfTour(tour);
+                return result;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    @Override
+    public boolean deleteTourLog(String tourLogId) {
+        ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
+
+        try {
+            if(tourLogDAO != null) {
+                boolean result = tourLogDAO.deleteTourLog(tourLogId);
+                return result;
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    @Override
+    public boolean updateTourLog(TourLog tourLog) {
+        ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
+
+        try {
+            if(tourLogDAO != null) {
+                boolean result = tourLogDAO.updateTourLog(tourLog.getTourLogId(), tourLog);
                 return result;
             }
         } catch(SQLException e) {

@@ -4,6 +4,7 @@ import com.example.tourplanner.bl.AppLogicFactory;
 import com.example.tourplanner.bl.IAppLogic;
 import com.example.tourplanner.bl.events.*;
 import com.example.tourplanner.models.Tour;
+import com.example.tourplanner.models.TourLog;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,7 +54,9 @@ public class MainViewModel implements IEventListener {
             this.syncAllTours();
         }
 
-        // TODO: the same as above for "TourLogs"
+        if("tourlog-created".equals(event) || "tourlog-updated".equals(event) || "tourlog-deleted".equals(event)) {
+            this.syncCurrentTourLog();
+        }
     }
 
 
@@ -85,8 +88,9 @@ public class MainViewModel implements IEventListener {
 
     public void fillInCurrentTourDetails(TourViewModel tour) {
         this.id.setValue(tour.getId().getValue());
-        this.currTourName.setValue(tour.getName().getValue());
+        this.currTourName.setValue(tour.getName().getValue() + " (Distance: " + tour.getDistance().getValue() + "km)");
         this.currTourDescription.setValue(tour.getDescription().getValue());
+        this.loadCurrentTourLogs(tour);
     }
 
 
@@ -102,6 +106,34 @@ public class MainViewModel implements IEventListener {
 
         if(result) {
             eventManager.notify("tour-deleted", tourId);
+        }
+
+        return result;
+    }
+
+
+    private void syncCurrentTourLog() {
+        Tour currTour = appLogic.getTourById(id.getValue());
+        this.loadCurrentTourLogs(new TourViewModel(currTour));
+    }
+
+
+    public void loadCurrentTourLogs(TourViewModel currTour) {
+        logsOfTours.clear();
+
+        Tour tour = currTour.initializeTour();
+        for(TourLog tourLog : appLogic.getLogOfTour(tour)) {
+            TourLogViewModel tourLogViewModel = new TourLogViewModel(tourLog);
+            logsOfTours.add(tourLogViewModel);
+        }
+    }
+
+
+    public boolean deleteTourLog(String tourLogId) {
+        boolean result = appLogic.deleteTourLog(tourLogId);
+
+        if(result) {
+            eventManager.notify("tourlog-deleted", tourLogId);
         }
 
         return result;

@@ -159,7 +159,10 @@ public class Database implements IDatabase {
             else {
                 return false;
             }
+        } catch(SQLException e) {
+            e.printStackTrace();
         }
+        throw new SQLException("Deleting data failed.");
     }
 
 

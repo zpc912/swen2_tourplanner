@@ -44,15 +44,11 @@ public class EditTourViewController implements Initializable {
     }
 
 
-    // TourViewModel Setter:
-    public void setViewModel(TourViewModel viewModel) {
-        this.viewModel = viewModel;
-    }
-
-
-    // TourViewModel Getter:
     public TourViewModel getViewModel() {
         return viewModel;
+    }
+    public void setViewModel(TourViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
 
