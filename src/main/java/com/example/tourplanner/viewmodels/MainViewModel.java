@@ -11,6 +11,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.image.Image;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class MainViewModel implements IEventListener {
@@ -50,8 +53,18 @@ public class MainViewModel implements IEventListener {
             this.syncCurrentTour();
         }
 
-        if("tour-created".equals(event) || "tour-deleted".equals(event)) {
+        /*if("tour-created".equals(event) || "tour-deleted".equals(event)) {
             this.syncAllTours();
+        }*/
+
+        if("tour-created".equals(event)) {
+            this.syncAllTours();
+        }
+
+        if("tour-deleted".equals(event)) {
+            this.syncAllTours();
+            //this.unloadCurrentTour();
+            //this.deleteTourImage("map_" + this.id.getValue());
         }
 
         if("tourlog-created".equals(event) || "tourlog-updated".equals(event) || "tourlog-deleted".equals(event)) {
@@ -87,10 +100,34 @@ public class MainViewModel implements IEventListener {
 
 
     public void fillInCurrentTourDetails(TourViewModel tour) {
+        // Load tour details & logs into view:
         this.id.setValue(tour.getId().getValue());
         this.currTourName.setValue(tour.getName().getValue() + " (Distance: " + tour.getDistance().getValue() + "km)");
-        this.currTourDescription.setValue(tour.getDescription().getValue());
+        this.currTourDescription.setValue(tour.getDescription().getValue()
+                + "\n\n----------\nTransport Type: " + tour.getTransportType().getValue()
+                + "\nEstimated Time: " + tour.getEstTime().getValue());
         this.loadCurrentTourLogs(tour);
+
+        // Load tour image into view:
+        try {
+            File tourMap = appLogic.getTourImage("map_" + tour.getId().getValue());
+            FileInputStream fileInputStream = new FileInputStream(tourMap);
+            Image tourImage = new Image(fileInputStream);
+            this.currTourImage.setValue(tourImage);
+            fileInputStream.close();
+        } catch(IOException e) {
+            // If no map could be retrieved load error image:
+
+            try {
+                 File tourMap = appLogic.getTourImage("map-not-found");
+                 FileInputStream fileInputStream = new FileInputStream(tourMap);
+                 Image tourImage = new Image(fileInputStream);
+                 this.currTourImage.setValue(tourImage);
+                 fileInputStream.close();
+             } catch(IOException f) {
+                 this.currTourImage.setValue(null);
+             }
+        }
     }
 
 
@@ -106,6 +143,9 @@ public class MainViewModel implements IEventListener {
 
         if(result) {
             eventManager.notify("tour-deleted", tourId);
+
+            this.unloadCurrentTour();
+            this.deleteTourImage("map_" + tourId);
         }
 
         return result;
@@ -135,6 +175,22 @@ public class MainViewModel implements IEventListener {
         if(result) {
             eventManager.notify("tourlog-deleted", tourLogId);
         }
+
+        return result;
+    }
+
+
+    private void unloadCurrentTour() {
+        this.id.setValue("");
+        this.currTourName.setValue("");
+        this.currTourDescription.setValue("");
+        this.currTourImage.setValue(null);
+        this.logsOfTours.setAll(FXCollections.observableArrayList());
+    }
+
+
+    public boolean deleteTourImage(String fileName) {
+        boolean result = appLogic.deleteTourImage(fileName);
 
         return result;
     }

@@ -4,9 +4,9 @@ import java.io.File;
 
 public interface IFileAccess {
 
-    File createFile(String path);
+    String createFile(String fileName, byte[] byteArray);
 
-    File readFile(String path);
+    File readFile(String fileName);
 
-    boolean deleteFile(String path);
+    boolean deleteFile(String fileName);
 }

@@ -3,6 +3,7 @@ package com.example.tourplanner.dal.common;
 import com.example.tourplanner.bl.ConfigurationManager;
 import com.example.tourplanner.dal.dao.ITourDAO;
 import com.example.tourplanner.dal.dao.ITourLogDAO;
+import com.example.tourplanner.dal.fileaccess.FileAccess;
 import com.example.tourplanner.dal.postgres.Database;
 import com.example.tourplanner.dal.postgres.TourDAO;
 import com.example.tourplanner.dal.postgres.TourLogDAO;
@@ -54,6 +55,17 @@ public class DALFactory {
     public static ITourLogDAO createTourLogDAO() {
         try {
             Class<ITourLogDAO> cls = (Class<ITourLogDAO>) Class.forName(TourLogDAO.class.getName());
+            return cls.getConstructor().newInstance();
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    public static IFileAccess createFileAccess() {
+        try {
+            Class<IFileAccess> cls = (Class<IFileAccess>) Class.forName(FileAccess.class.getName());
             return cls.getConstructor().newInstance();
         } catch(Exception e) {
             e.printStackTrace();

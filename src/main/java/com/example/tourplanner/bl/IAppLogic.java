@@ -2,7 +2,9 @@ package com.example.tourplanner.bl;
 
 import com.example.tourplanner.models.*;
 
+import java.io.File;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IAppLogic {
@@ -24,4 +26,12 @@ public interface IAppLogic {
     boolean deleteTourLog(String tourLogId);
 
     boolean updateTourLog(TourLog tourLog);
+
+    ArrayList<String> requestTourDetails(Tour tour);
+
+    String requestTourMap(Tour tour);
+
+    File getTourImage(String fileName);
+
+    boolean deleteTourImage(String fileName);
 }

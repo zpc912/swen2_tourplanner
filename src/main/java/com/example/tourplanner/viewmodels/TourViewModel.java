@@ -79,7 +79,7 @@ public class TourViewModel {
     public String createNewTour() {
         UUID uuid = UUID.randomUUID();
         String tourId = ""+uuid;
-        float mockValue = 0.0f; // PLACEHOLDER VALUE
+        float mockValue = 0.0f; // TEMPORARY VALUE
         Tour tour = new Tour(tourId, name.getValue(), description.getValue(), from.getValue(), to.getValue(), transportType.getValue(), mockValue, null, null);
         String result = appLogic.createTour(tour);
 
