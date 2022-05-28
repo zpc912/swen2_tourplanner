@@ -2,6 +2,8 @@ package com.example.tourplanner.views;
 
 import com.example.tourplanner.Main;
 import com.example.tourplanner.viewmodels.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
@@ -29,7 +32,7 @@ public class EditTourViewController implements Initializable {
     @FXML
     public TextField tourToField;
     @FXML
-    public TextField tourTransportField;
+    public ComboBox<String> tourTransportMenu;
     @FXML
     public TextArea tourDescField;
 
@@ -39,7 +42,14 @@ public class EditTourViewController implements Initializable {
         tourNameField.textProperty().bindBidirectional(viewModel.getName());
         tourFromField.textProperty().bindBidirectional(viewModel.getFrom());
         tourToField.textProperty().bindBidirectional(viewModel.getTo());
-        tourTransportField.textProperty().bindBidirectional(viewModel.getTransportType());
+
+        ObservableList<String> transportTypes = FXCollections.observableArrayList();
+        transportTypes.add("AUTO");
+        transportTypes.add("WALKING");
+        transportTypes.add("BICYCLE");
+        tourTransportMenu.setItems(transportTypes);
+        tourTransportMenu.valueProperty().bindBidirectional(viewModel.getTransportType());
+
         tourDescField.textProperty().bindBidirectional(viewModel.getDescription());
     }
 

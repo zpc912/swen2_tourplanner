@@ -34,4 +34,10 @@ public interface IAppLogic {
     File getTourImage(String fileName);
 
     boolean deleteTourImage(String fileName);
+
+    void generateTourReport(Tour tour, List<TourLog> tourLogs);
+
+    void generateSummaryReport(List<Tour> allTours, List<TourLog> allTourLogs);
+
+    List<TourLog> getAllTourLogs();
 }

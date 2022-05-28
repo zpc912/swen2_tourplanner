@@ -7,6 +7,7 @@ import com.example.tourplanner.dal.dao.ITourLogDAO;
 import com.example.tourplanner.models.Tour;
 import com.example.tourplanner.models.TourLog;
 
+import java.math.BigDecimal;
 import java.sql.Array;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -80,8 +81,11 @@ public class TourLogDAO implements ITourLogDAO {
 
 
     @Override
-    public List<TourLog> getAllTourLogs() {
-        return null;
+    public List<TourLog> getAllTourLogs() throws SQLException {
+        List<Map<String, Object>> rows = db.read(GET_ALL);
+        List<TourLog> allTourLogs = parseDataFromResultSet(rows);
+
+        return allTourLogs;
     }
 
 
@@ -108,5 +112,25 @@ public class TourLogDAO implements ITourLogDAO {
         }
 
         return tourLogs;
+    }
+
+
+    private List<TourLog> parseDataFromResultSet(List<Map<String, Object>> rows) {
+        List<TourLog> selectedTourLogs = new ArrayList<>();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        for(Map<String, Object> row : rows) {
+            selectedTourLogs.add(new TourLog(
+                    (String) row.get("tourLogId"),
+                    (Tour) row.get("tour"),
+                    LocalDate.parse((String) row.get("date"), dateTimeFormatter),
+                    (String) row.get("comment"),
+                    (String) row.get("difficulty"),
+                    (String) row.get("totalTime"),
+                    (String) row.get("rating")
+            ));
+        }
+
+        return selectedTourLogs;
     }
 }

@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainViewModel implements IEventListener {
 
@@ -193,5 +195,23 @@ public class MainViewModel implements IEventListener {
         boolean result = appLogic.deleteTourImage(fileName);
 
         return result;
+    }
+
+
+    public void generateTourReport(TourViewModel currTour) {
+        String tourId = currTour.getId().getValue();
+
+        Tour tour = appLogic.getTourById(tourId);
+        List<TourLog> tourLogs = appLogic.getLogOfTour(tour);
+
+        appLogic.generateTourReport(tour, tourLogs);
+    }
+
+
+    public void generateSummaryReport() {
+        List<Tour> allTours = appLogic.getAllTours();
+        List<TourLog> allTourLogs = appLogic.getAllTourLogs();
+
+        appLogic.generateSummaryReport(allTours, allTourLogs);
     }
 }

@@ -6,6 +6,9 @@ module com.example.tourplanner {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.annotation;
+    requires io;
+    requires kernel;
+    requires layout;
 
 
     opens com.example.tourplanner to javafx.fxml;

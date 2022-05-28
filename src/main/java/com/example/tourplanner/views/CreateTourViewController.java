@@ -34,8 +34,6 @@ public class CreateTourViewController implements Initializable {
     public TextField tourFromField;
     @FXML
     public TextField tourToField;
-    /*@FXML
-    public TextField tourTransportField;*/
     @FXML
     public ComboBox<String> tourTransportMenu;
     @FXML

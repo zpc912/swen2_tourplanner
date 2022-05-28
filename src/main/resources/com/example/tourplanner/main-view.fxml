@@ -24,12 +24,8 @@
 
                         <Menu mnemonicParsing="false" text="Options">
                             <items>
-                                <!-- ADD "ON-ACTION" ATTRIBUTE -->
-                                <MenuItem mnemonicParsing="false"
-                                          text="Generate Summary Report"/>
-                                <!-- ADD "ON-ACTION" ATTRIBUTE -->
-                                <MenuItem mnemonicParsing="false"
-                                          text="Generate Tour Report"/>
+                                <MenuItem mnemonicParsing="false" onAction="#generateTourReport" text="Generate Tour Report"/>
+                                <MenuItem mnemonicParsing="false" onAction="#generateSummaryReport" text="Generate Summary Report"/>
                             </items>
                         </Menu>
 

@@ -121,4 +121,18 @@ public class MainViewController implements Initializable {
             EditTourLogViewController.editTourLogWindow(newStage, tourLog);
         }
     }
+
+
+    public void generateTourReport(ActionEvent actionEvent) {
+        TourViewModel tour = tourListView.getSelectionModel().getSelectedItem();
+
+        if(tour != null) {
+            viewModel.generateTourReport(tour);
+        }
+    }
+
+
+    public void generateSummaryReport(ActionEvent actionEvent) {
+        viewModel.generateSummaryReport();
+    }
 }

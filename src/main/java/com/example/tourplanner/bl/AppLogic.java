@@ -4,6 +4,7 @@ import com.example.tourplanner.bl.events.EventManagerFactory;
 import com.example.tourplanner.bl.events.IEventListener;
 import com.example.tourplanner.bl.events.IEventManager;
 import com.example.tourplanner.bl.mapquestapi.MapQuestAPI;
+import com.example.tourplanner.bl.reports.ReportManager;
 import com.example.tourplanner.dal.common.DALFactory;
 import com.example.tourplanner.dal.common.IFileAccess;
 import com.example.tourplanner.dal.dao.ITourDAO;
@@ -111,6 +112,19 @@ public class AppLogic implements IAppLogic, IEventListener {
     public boolean updateTour(Tour tour) {
         ITourDAO tourDAO = DALFactory.createTourDAO();
         String tourId = tour.getTourId();
+
+        // Call method to get information about the route from MapQuest:
+        ArrayList<String> routeInformation = requestTourDetails(tour);
+
+        // Assign the received distance and estimated duration to the tour:
+        float distance = Float.parseFloat(routeInformation.get(0));
+        tour.setDistance(distance);
+        tour.setEstTime(routeInformation.get(1));
+
+        // Call method to get an image of the tour map:
+        String routeMap = requestTourMap(tour);
+        // Assign the file path of the saved image to the given tour:
+        tour.setRouteInfo(routeMap);
 
         try {
             if(tourDAO != null) {
@@ -274,5 +288,35 @@ public class AppLogic implements IAppLogic, IEventListener {
         else {
             return false;
         }
+    }
+
+
+    @Override
+    public void generateTourReport(Tour tour, List<TourLog> tourLogs) {
+        ReportManager reportManager = new ReportManager();
+        reportManager.generateTourReport(tour, tourLogs);
+    }
+
+
+    @Override
+    public void generateSummaryReport(List<Tour> allTours, List<TourLog> allTourLogs) {
+        ReportManager reportManager = new ReportManager();
+        reportManager.generateSummaryReport(allTours, allTourLogs);
+    }
+
+
+    @Override
+    public List<TourLog> getAllTourLogs() {
+        ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
+
+        try {
+            if(tourLogDAO != null) {
+                return tourLogDAO.getAllTourLogs();
+            }
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
