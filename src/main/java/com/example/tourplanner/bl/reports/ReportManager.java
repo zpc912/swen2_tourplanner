@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -185,7 +186,14 @@ public class ReportManager {
 
 
     public void generateSummaryReport(List<Tour> allTours, List<TourLog> allTourLogs) {
-        reportDir += "\\summary_report.pdf";
+        LocalDate ld = LocalDate.now();
+        LocalTime lt = LocalTime.now();
+
+        String ldStr = ld.toString();
+        long ltLong = lt.toNanoOfDay();
+        String ltStr = String.valueOf(ltLong);
+
+        reportDir += "\\summary_report_" + ldStr + "_" + ltStr + ".pdf";
         float totalDistance = 0.0f;
         ArrayList<LocalTime> allTourDurations = new ArrayList<>();
 
