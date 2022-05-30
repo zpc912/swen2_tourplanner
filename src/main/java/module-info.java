@@ -16,4 +16,10 @@ module com.example.tourplanner {
     exports com.example.tourplanner.views;
     opens com.example.tourplanner.views to javafx.fxml;
     opens com.example.tourplanner.viewmodels;
+    exports com.example.tourplanner.bl;
+    exports com.example.tourplanner.models;
+    exports com.example.tourplanner.dal.common;
+    exports com.example.tourplanner.dal.dao;
+    exports com.example.tourplanner.dal.fileaccess;
+    exports com.example.tourplanner.dal.postgres;
 }
