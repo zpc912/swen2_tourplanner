@@ -12,6 +12,8 @@ import com.example.tourplanner.dal.dao.ITourLogDAO;
 import com.example.tourplanner.dal.fileaccess.FileAccess;
 import com.example.tourplanner.models.Tour;
 import com.example.tourplanner.models.TourLog;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -23,7 +25,7 @@ import java.util.Map;
 public class AppLogic implements IAppLogic, IEventListener {
 
     private final IEventManager eventManager = EventManagerFactory.getEventManager();
-    // TODO: add "Logger"
+    private final Logger log = LogManager.getLogger(AppLogic.class);
 
 
     public AppLogic() {
@@ -44,6 +46,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public List<Tour> getAllTours() {
+        log.info("Get all tours");
         ITourDAO tourDAO = DALFactory.createTourDAO();
 
         try {
@@ -52,6 +55,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         return null;
@@ -60,6 +64,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public Tour getTourById(String tourId) {
+        log.info("Get tour by ID (ID: " + tourId + ")");
         ITourDAO tourDAO = DALFactory.createTourDAO();
 
         try {
@@ -73,6 +78,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
             return null;
         }
     }
@@ -80,6 +86,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public String createTour(Tour tour) {
+        log.info("Create new tour (ID: " + tour.getTourId() + ")");
         ITourDAO tourDAO = DALFactory.createTourDAO();
 
         // Call method to get information about the route from MapQuest:
@@ -102,6 +109,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         return null;
@@ -110,6 +118,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public boolean updateTour(Tour tour) {
+        log.info("Update tour (ID: " + tour.getTourId() + ")");
         ITourDAO tourDAO = DALFactory.createTourDAO();
         String tourId = tour.getTourId();
 
@@ -133,6 +142,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         return false;
@@ -141,6 +151,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public boolean deleteTour(String tourId) {
+        log.info("Delete tour (ID: " + tourId + ")");
         ITourDAO tourDAO = DALFactory.createTourDAO();
 
         try {
@@ -150,6 +161,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         return false;
@@ -158,6 +170,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public String createTourLog(TourLog tourLog, Tour tour) {
+        log.info("Create tour log (ID: " + tourLog.getTourLogId() + ")");
         ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
 
         try {
@@ -167,6 +180,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         return null;
@@ -175,6 +189,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public List<TourLog> getLogOfTour(Tour tour) {
+        log.info("Get logs of tour (ID: " + tour.getTourId() + ")");
         ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
 
         try {
@@ -184,6 +199,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         return null;
@@ -192,6 +208,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public boolean deleteTourLog(String tourLogId) {
+        log.info("Delete tour log (ID: " + tourLogId + ")");
         ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
 
         try {
@@ -201,6 +218,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         return false;
@@ -209,6 +227,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public boolean updateTourLog(TourLog tourLog) {
+        log.info("Update tour log (ID: " + tourLog.getTourLogId() + ")");
         ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
 
         try {
@@ -226,6 +245,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public ArrayList<String> requestTourDetails(Tour tour) {
+        log.info("Request tour details from MapQuest (ID: " + tour.getTourId() + ")");
         Map<String, Object> routeInformation = MapQuestAPI.getRouteDirections(tour.getFrom(), tour.getTo(), tour.getTransportType());
 
         String distance = routeInformation.get("distance").toString();
@@ -238,6 +258,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             return distAndDur;
         }
         else {
+            log.error("Requesting tour details from MapQuest failed");
             return null;
         }
     }
@@ -245,6 +266,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public String requestTourMap(Tour tour) {
+        log.info("Request tour map from StaticMap (ID: " + tour.getTourId() + ")");
         ArrayList<String> routeInformation = requestTourDetails(tour);
 
         if(Float.parseFloat(routeInformation.get(0)) > 0.0f)  {
@@ -258,10 +280,12 @@ public class AppLogic implements IAppLogic, IEventListener {
                 return filePath;
             }
             else {
+                log.error("Requesting tour map failed (route not found)");
                 return null;
             }
         }
         else {
+            log.error("Requesting tour map failed (invalid data from MapQuest)");
             return null;
         }
     }
@@ -269,6 +293,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public File getTourImage(String fileName) {
+        log.info("Loading map image (Map: " + fileName + ")");
         IFileAccess fileAccess = DALFactory.createFileAccess();
 
         File file = fileAccess.readFile(fileName);
@@ -279,6 +304,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public boolean deleteTourImage(String fileName) {
+        log.info("Deleting map image (Map: " + fileName + ")");
         IFileAccess fileAccess = DALFactory.createFileAccess();
         boolean result = fileAccess.deleteFile(fileName);
 
@@ -286,6 +312,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             return true;
         }
         else {
+            log.error("Deleting map image failed (Map: " + fileName + ")");
             return false;
         }
     }
@@ -293,6 +320,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public void generateTourReport(Tour tour, List<TourLog> tourLogs) {
+        log.info("Generating single tour report (ID: " + tour.getTourId() + ")");
         ReportManager reportManager = new ReportManager();
         reportManager.generateTourReport(tour, tourLogs);
     }
@@ -300,6 +328,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public void generateSummaryReport(List<Tour> allTours, List<TourLog> allTourLogs) {
+        log.info("Generating summary report");
         ReportManager reportManager = new ReportManager();
         reportManager.generateSummaryReport(allTours, allTourLogs);
     }
@@ -307,6 +336,7 @@ public class AppLogic implements IAppLogic, IEventListener {
 
     @Override
     public List<TourLog> getAllTourLogs() {
+        log.info("Get all tour logs");
         ITourLogDAO tourLogDAO = DALFactory.createTourLogDAO();
 
         try {
@@ -315,6 +345,7 @@ public class AppLogic implements IAppLogic, IEventListener {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
 
         return null;

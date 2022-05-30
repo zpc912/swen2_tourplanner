@@ -15,10 +15,7 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
                             <items>
-                                <!-- ADD "ON-ACTION" ATTRIBUTE -->
-                                <MenuItem mnemonicParsing="false" text="Import Data" />
-                                <!-- ADD "ON-ACTION" ATTRIBUTE -->
-                                <MenuItem mnemonicParsing="false" text="Export Data" />
+                                <!-- TODO: import/export of tour data -->
                             </items>
                         </Menu>
 
@@ -31,7 +28,8 @@
 
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#openHelpWindow" text="Help"/>
+                                <MenuItem mnemonicParsing="false" onAction="#openHelpWindow" text="Contact"/>
+                                <MenuItem mnemonicParsing="false" onAction="#openGithubWindow" text="Source Code (Github)"/>
                             </items>
                         </Menu>
                     </menus>

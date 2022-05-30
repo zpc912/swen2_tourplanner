@@ -9,6 +9,8 @@ module com.example.tourplanner {
     requires io;
     requires kernel;
     requires layout;
+    requires org.apache.logging.log4j;
+    requires javafx.web;
 
 
     opens com.example.tourplanner to javafx.fxml;

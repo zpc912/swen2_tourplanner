@@ -135,4 +135,9 @@ public class MainViewController implements Initializable {
     public void generateSummaryReport(ActionEvent actionEvent) {
         viewModel.generateSummaryReport();
     }
+
+
+    public void openGithubWindow(ActionEvent actionEvent) {
+        GithubViewController.openGithubWindow();
+    }
 }

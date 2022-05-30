@@ -94,7 +94,7 @@ public class ReportManager {
                     .setFontColor(ColorConstants.BLACK);
             document.add(transportType);
 
-            Paragraph distance = new Paragraph("Distance: " + tour.getDistance())
+            Paragraph distance = new Paragraph("Distance: " + tour.getDistance() + "km")
                     .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
                     .setFontSize(14)
                     .setFontColor(ColorConstants.BLACK);
@@ -120,24 +120,35 @@ public class ReportManager {
                     .setFontColor(ColorConstants.BLACK);
             document.add(tableHeader);
 
-            Table table = new Table(UnitValue.createPercentArray(5)).useAllAvailableWidth();
-            table.addHeaderCell(getHeaderCell("Date"));
-            table.addHeaderCell(getHeaderCell("Comment"));
-            table.addHeaderCell(getHeaderCell("Difficulty"));
-            table.addHeaderCell(getHeaderCell("Total Time"));
-            table.addHeaderCell(getHeaderCell("Rating"));
-            table.setFontSize(14).setBackgroundColor(ColorConstants.WHITE);
-
-            for(int i=0; i<tourLogs.size(); i++) {
-                TourLog tourLog = tourLogs.get(i);
-
-                table.addCell(tourLog.getDate().toString());
-                table.addCell(tourLog.getComment());
-                table.addCell(tourLog.getDifficulty());
-                table.addCell(tourLog.getTotalTime());
-                table.addCell(tourLog.getRating());
+            if(tourLogs.isEmpty()) {
+                Paragraph noTourLogs = new Paragraph("<NO TOUR LOGS>")
+                        .setFont(PdfFontFactory.createFont(StandardFonts.HELVETICA))
+                        .setFontSize(14)
+                        .setItalic()
+                        .setFontColor(ColorConstants.BLACK);
+                document.add(noTourLogs);
             }
-            document.add(table);
+            else {
+                Table table = new Table(UnitValue.createPercentArray(5)).useAllAvailableWidth();
+                table.addHeaderCell(getHeaderCell("Date"));
+                table.addHeaderCell(getHeaderCell("Comment"));
+                table.addHeaderCell(getHeaderCell("Difficulty"));
+                table.addHeaderCell(getHeaderCell("Total Time"));
+                table.addHeaderCell(getHeaderCell("Rating"));
+                table.setFontSize(14).setBackgroundColor(ColorConstants.WHITE);
+
+                for(int i=0; i<tourLogs.size(); i++) {
+                    TourLog tourLog = tourLogs.get(i);
+
+                    table.addCell(tourLog.getDate().toString());
+                    table.addCell(tourLog.getComment());
+                    table.addCell(tourLog.getDifficulty());
+                    table.addCell(tourLog.getTotalTime());
+                    table.addCell(tourLog.getRating());
+                }
+
+                document.add(table);
+            }
 
 
             // Tour Map:

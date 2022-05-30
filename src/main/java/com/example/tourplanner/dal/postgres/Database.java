@@ -2,6 +2,8 @@ package com.example.tourplanner.dal.postgres;
 
 import com.example.tourplanner.bl.ConfigurationManager;
 import com.example.tourplanner.dal.common.IDatabase;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.Map;
 public class Database implements IDatabase {
 
     private String connectionString;
+    private final Logger log = LogManager.getLogger(Database.class);
 
 
     public Database(String connectionString) {
@@ -20,6 +23,7 @@ public class Database implements IDatabase {
 
 
     private Connection createConnection() throws SQLException {
+        log.info("Connecting to database and executing query");
         String db_username = ConfigurationManager.getConfigProperty("DbUser");
         String db_password = ConfigurationManager.getConfigProperty("DbPassword");
 
@@ -27,6 +31,7 @@ public class Database implements IDatabase {
             return DriverManager.getConnection(connectionString, db_username, db_password);
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
         throw new SQLException("Establishing database connection failed.");
     }
@@ -34,6 +39,7 @@ public class Database implements IDatabase {
 
     @Override
     public <T> List<T> read(String sqlQuery) throws SQLException {
+        log.info("Reading data without parameters (Query: " + sqlQuery + ")");
         try(
                 Connection conn = createConnection();
                 Statement statement = conn.createStatement();
@@ -42,6 +48,7 @@ public class Database implements IDatabase {
             return (List<T>) GetDataFromResultSet(resultSet);
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
         throw new SQLException("Reading data failed.");
     }
@@ -49,6 +56,7 @@ public class Database implements IDatabase {
 
     @Override
     public <T> List<T> read(String sqlQuery, ArrayList<Object> parameters) throws SQLException {
+        log.info("Reading data with parameters (Query: " + sqlQuery + " | Parameters: " + parameters + ")");
         try(
                 Connection conn = createConnection();
                 PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
@@ -68,6 +76,7 @@ public class Database implements IDatabase {
             return (List<T>) GetDataFromResultSet(resultSet);
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
         throw new SQLException("Reading data failed.");
     }
@@ -75,6 +84,7 @@ public class Database implements IDatabase {
 
     @Override
     public String insertNew(String sqlQuery, ArrayList<Object> parameters) throws SQLException {
+        log.info("Inserting new data (Query: " + sqlQuery + " | Parameters: " + parameters + ")");
         try(
                 Connection conn = createConnection();
                 PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
@@ -100,6 +110,7 @@ public class Database implements IDatabase {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
         throw new SQLException("Inserting data failed.");
     }
@@ -107,6 +118,7 @@ public class Database implements IDatabase {
 
     @Override
     public boolean update(String sqlQuery, ArrayList<Object> parameters) throws SQLException {
+        log.info("Updating data (Query: " + sqlQuery + " | Parameters: " + parameters + ")");
         try(
                 Connection conn = createConnection();
                 PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
@@ -130,6 +142,7 @@ public class Database implements IDatabase {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
         throw new SQLException("Updating data failed.");
     }
@@ -137,6 +150,7 @@ public class Database implements IDatabase {
 
     @Override
     public boolean delete(String sqlQuery, ArrayList<Object> parameters) throws SQLException {
+        log.info("Deleting data (Query: " + sqlQuery + " | Parameters: " + parameters + ")");
         try(
                 Connection conn = createConnection();
                 PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
@@ -161,6 +175,7 @@ public class Database implements IDatabase {
             }
         } catch(SQLException e) {
             e.printStackTrace();
+            log.error(e);
         }
         throw new SQLException("Deleting data failed.");
     }
